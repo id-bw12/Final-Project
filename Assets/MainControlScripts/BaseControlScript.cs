@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class BaseControlScript : MonoBehaviour
 {
@@ -13,5 +12,7 @@ public class BaseControlScript : MonoBehaviour
 	}
 
 	protected MainStates state = MainStates.None;
+
+    protected GameObject canvas, panel, eventSystem;
 }
 
