@@ -5,10 +5,11 @@ public class BaseControlScript : MonoBehaviour
 
 	protected enum MainStates{
 		Main = 0,
-		Options = 1,
-		Credits = 2, 
-		Exit = 3,
-		None = 4
+        Play = 1,
+		Options = 2,
+		Credits = 3, 
+		Exit = 4,
+		None = 5
 	}
 
 	protected MainStates state = MainStates.None;

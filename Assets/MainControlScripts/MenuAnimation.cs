@@ -1,38 +1,42 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
-public class MenuAnimation : BaseControlScript
-{
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class MenuAnimation : BaseControlScript{
 
-    public void FadeOut() {
+    public void FadeAnimation(bool isFading) {
 
-        //Color alpha = new Color(0,0,0,-1);
+        if (isFading)
+            StartCoroutine(FadeOut());
+        else
+            StartCoroutine(FadeIn());
+    }
 
-        //int limit = 100;
+    IEnumerator FadeOut() {
 
-        //var panel = GameObject.Find("Panel");
+        var canvasAlpha = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
 
-        //Image[] objectsRender = panel.GetComponentsInChildren<Image>();
+        canvasAlpha.interactable = false;
+        yield return null;
 
-        //while (limit != 0)
-        //{
-        //    foreach (var render in objectsRender)
-        //        render.material.color += alpha;
+        while (canvasAlpha.alpha > 0) {
+            canvasAlpha.alpha -= Time.deltaTime * 2;
+            yield return null;
+        }
 
-        //    limit--;
-        //}
+        
+    }
 
-        Debug.Log("it worked");
+    IEnumerator FadeIn(){
 
+        var canvasAlpha = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
+        
+        while (canvasAlpha.alpha < 1)
+        {
+            canvasAlpha.alpha += Time.deltaTime *2;
+            yield return null;
+        }
+
+        canvasAlpha.interactable = true;
+        yield return null;
     }
 }

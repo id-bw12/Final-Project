@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,21 +10,20 @@ using UnityEngine.EventSystems;
 public class MainScript : BaseControlScript {
 
 	private UIMakerScript ui = new UIMakerScript();
+
+    bool faded = false;
     
 	// Use this for initialization
 	void Start () {
 		canvas = ui.CreateCanvas (this.transform);
+
+        canvas.gameObject.AddComponent<CanvasGroup>();
 
 		eventSystem = ui.CreateEventSystem (canvas.transform);
 
 		state = MainStates.Main;
 
         CheckMenuLocation();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
 	}
 
     /*********************************************************
@@ -38,6 +39,10 @@ public class MainScript : BaseControlScript {
 
         switch (state)
         {
+
+            case MainStates.Play:
+                TransferScene();
+                break;
 
             case MainStates.Credits:
                 MakeMainScreen(1, 5);
@@ -85,22 +90,30 @@ public class MainScript : BaseControlScript {
         {
           var button = ui.CreateButton(panel.transform, positions[row][i], new Vector2(75, 25),
                 buttonNames[row][i], buttonNames[row][i],
-                delegate { ChangeMenuStates(); });
+                delegate { StartCoroutine (ChangeMenuStates()); });
 
             button.GetComponent<RectTransform>().localScale = new Vector3(0.75f, 0.75f, 1.0f);
         }
-		
+
+        if (MainStates.Options == state){
+            ui.CreateScaler(panel.transform, new Vector2(25, 100), 100);
+        }
+
+        if (faded)
+            this.gameObject.GetComponent<MenuAnimation>().FadeAnimation(faded = false);
+        
 
 	}
 
-	void ChangeMenuStates(){
+	IEnumerator ChangeMenuStates(){
 
         //get the button that was clicked
-		string name = eventSystem.GetComponent<EventSystem> ().currentSelectedGameObject.name;
+		var name = eventSystem.GetComponent<EventSystem> ().currentSelectedGameObject.name;
 
         switch (name)
         {
             case "Play":
+                state = MainStates.Play;
                 break;
 
             case "Options":
@@ -120,11 +133,18 @@ public class MainScript : BaseControlScript {
                 break;
         }
 
-        //this.gameObject.GetComponent<MenuAnimation>().FadeOut();
+        this.gameObject.GetComponent<MenuAnimation>().FadeAnimation(faded = true);
+
+        yield return new WaitForSeconds(1.5f);
 
         GameObject.Destroy (panel);
 
         CheckMenuLocation();
 
 	}
+
+    void TransferScene() {
+
+        SceneManager.LoadScene("Level 1");
+    }
 }
