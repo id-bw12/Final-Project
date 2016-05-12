@@ -28,7 +28,8 @@ public class MainScript : BaseControlScript
 
         eventSystem = ui.CreateEventSystem(canvas.transform);
 
-        state = MainStates.Main;
+        if(MenuStates.None == state || MenuStates.Play == state)
+            state = MenuStates.Main;
 
         CheckMenuLocation();
     }
@@ -48,23 +49,23 @@ public class MainScript : BaseControlScript
         switch (state)
         {
 
-            case MainStates.Play:
+            case MenuStates.Play:
                 TransferScene();
                 break;
 
-            case MainStates.Credits:
+            case MenuStates.Credits:
                 MakeMainScreen(1);
                 break;
 
-            case MainStates.Options:
+            case MenuStates.Options:
                 MakeMainScreen(2);
                 break;
 
-            case MainStates.Exit:
+            case MenuStates.Exit:
                 Exit();
                 break;
 
-            case MainStates.Main:
+            case MenuStates.Main:
                 MakeMainScreen(0); //The zero is the row in the 2D list and the 4 is the size of the column in the 2D list
                 break;
         }
@@ -86,9 +87,9 @@ public class MainScript : BaseControlScript
 
         panel = ui.CreatePanel(canvas.transform, Color.clear);
 
-        MakeButtons(row );
+        MakeButtons(row);
 
-        if (MainStates.Options == state)
+        if (MenuStates.Options == state)
             MakeSlider();
         
         if (faded)
@@ -123,8 +124,9 @@ public class MainScript : BaseControlScript
 
     void MakeSlider() {
 
-        List<string> labels = new List<string>() {
-            "Music Volume", "Sound Volume"
+        List<List<string>> labels = new List<List<string>>() {
+            new List<string>(){ "Music Volume", "Sound Volume" },
+            new List<string>(){ "Music Slider","Sound Slider"}
         };
 
         List<List<Vector2>> positions = new List<List<Vector2>>(){
@@ -134,12 +136,14 @@ public class MainScript : BaseControlScript
 
         for (int i = 0; i < labels.Count; i++)
         {
-            var text = ui.CreateText(panel.transform, positions[0][i], new Vector2(50, 50), labels[i], labels[i], 12);
+            var text = ui.CreateText(panel.transform, positions[0][i], new Vector2(50, 50), labels[0][i], labels[0][i], 12);
             text.GetComponent<Text>().color = Color.black;
             text.transform.localScale = new Vector3( 0.75f, 0.75f , 1.0f);
+
             var scale = ui.CreateScaler(panel.transform, positions[1][i], 100, 100);
             scale.transform.localScale = new Vector3(0.75f, 0.75f, 1.0f);
-
+            scale.name = labels[1][i];
+            scale.GetComponent<Slider>().onValueChanged.AddListener(delegate { ChangeAudio(); });
         }
     }
 
@@ -152,23 +156,23 @@ public class MainScript : BaseControlScript
         switch (name)
         {
             case "Play":
-                state = MainStates.Play;
+                state = MenuStates.Play;
                 break;
 
             case "Options":
-                state = MainStates.Options;
+                state = MenuStates.Options;
                 break;
 
             case "Credits":
-                state = MainStates.Credits;
+                state = MenuStates.Credits;
                 break;
 
             case "Exit":
-                state = MainStates.Exit;
+                state = MenuStates.Exit;
                 break;
 
             case "Back":
-                state = MainStates.Main;
+                state = MenuStates.Main;
                 break;
         }
 
@@ -184,6 +188,7 @@ public class MainScript : BaseControlScript
 
     void TransferScene()
     {
+        GameObject.Destroy(canvas);
 
         SceneManager.LoadScene("Level 1");
     }
@@ -192,5 +197,24 @@ public class MainScript : BaseControlScript
     {
 
         UnityEditor.EditorApplication.isPlaying = false;
+    }
+
+    void ChangeAudio() {
+
+        var scaler = eventSystem.GetComponent<EventSystem>().currentSelectedGameObject;
+
+        switch (scaler.name) {
+
+            case "Music Slider":
+                musicVolume = (scaler.GetComponent<Slider>().value / 100);
+                this.GetComponent<AudioSource>().volume = musicVolume;
+                break;
+
+            case "Sound Volume": 
+                soundEffectVolume = (scaler.GetComponent<Slider>().value / 100);
+                break;
+        }
+
+        Debug.Log(scaler.GetComponent<Slider>().value);
     }
 }
