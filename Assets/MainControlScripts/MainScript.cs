@@ -134,13 +134,15 @@ public class MainScript : BaseControlScript
             new List<Vector2>() { new Vector2(10, 80), new Vector2(10, 30)}
         };
 
+        float[] volume = new float[] {(this.gameObject.GetComponent<AudioSource>().volume*100), 100 };
+
         for (int i = 0; i < labels.Count; i++)
         {
             var text = ui.CreateText(panel.transform, positions[0][i], new Vector2(50, 50), labels[0][i], labels[0][i], 12);
             text.GetComponent<Text>().color = Color.black;
             text.transform.localScale = new Vector3( 0.75f, 0.75f , 1.0f);
 
-            var scale = ui.CreateScaler(panel.transform, positions[1][i], 100, 100);
+            var scale = ui.CreateScaler(panel.transform, positions[1][i], volume[i], 100);
             scale.transform.localScale = new Vector3(0.75f, 0.75f, 1.0f);
             scale.name = labels[1][i];
             scale.GetComponent<Slider>().onValueChanged.AddListener(delegate { ChangeAudio(); });
