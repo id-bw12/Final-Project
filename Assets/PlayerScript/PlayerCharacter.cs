@@ -49,8 +49,9 @@ using UnityEngine;
 using System.Collections;
 
 public class PlayerCharacter : MonoBehaviour {
+
 	private int health = 5;
-    protected float speed = 6.0f;
+    protected float speed = 6.0f, vertSpeed = -1.6f, jumpSpeed = 12.0f, terminalVelocity = -10.0f;
 
 	/**********************************************************
 	 * 	NAME: 			GetPlayerHealth
