@@ -1,4 +1,4 @@
 sceneSetups:
-- path: C:/Users/BT21129/Desktop/Final-Project-master/Assets/Main Menu.unity
+- path: Assets/Scene/Main Menu.unity
   isLoaded: 1
   isActive: 1

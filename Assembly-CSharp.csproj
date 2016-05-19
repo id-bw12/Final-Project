@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{4745A9C0-E681-A22F-6EA6-7BE7D75511C1}</ProjectGuid>
+    <ProjectGuid>{EABD3674-C11A-A7D2-F2A9-562A540B0759}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -45,15 +45,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\0000 a colormap terrainshader final\Scripts\CustomTerrainScriptColorMap.cs" />
+     <Compile Include="Assets\BackGround.cs" />
+     <Compile Include="Assets\Fadeout.cs" />
+     <Compile Include="Assets\MainControlScripts\AudioScript.cs" />
      <Compile Include="Assets\MainControlScripts\BaseControlScript.cs" />
+     <Compile Include="Assets\MainControlScripts\Level 1.cs" />
      <Compile Include="Assets\MainControlScripts\MainScript.cs" />
-     <Compile Include="Assets\UIMakerScript.cs" />
+     <Compile Include="Assets\MainControlScripts\MenuAnimation.cs" />
+     <Compile Include="Assets\MainControlScripts\ObjectTransfer.cs" />
+     <Compile Include="Assets\MainControlScripts\PauseMenu.cs" />
+     <Compile Include="Assets\MainControlScripts\UIMakerScript.cs" />
+     <Compile Include="Assets\PlayerScript\FPSInput.cs" />
+     <Compile Include="Assets\PlayerScript\GunMechanic.cs" />
+     <Compile Include="Assets\PlayerScript\PlayerCharacter.cs" />
+     <Compile Include="Assets\PlayerScript\playerSight.cs" />
+     <Compile Include="Assets\rotation.cs" />
+     <Compile Include="Assets\startScript.cs" />
+     <None Include="Assets\Standard Assets\0000 a colormap terrainshader final\Resources\TerrainReplacementColorMap_noiftexturefetch.shader" />
+     <None Include="Assets\Standard Assets\mClouds\Compiled-Unlit-Normal-nofog.shader" />
+     <None Include="Assets\0000 a colormap terrainshader final\Resources\TerrainReplacementColorMap_noiftexturefetch.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{80B20BAF-F914-5708-6918-AD276B986FBD}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

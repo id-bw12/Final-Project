@@ -138,7 +138,6 @@ public class FPSInput : PlayerCharacter
         }
         else {
             vertSpeed += gravity * 5 * Time.deltaTime;
-            Debug.Log("falling");
             if (vertSpeed < terminalVelocity)
                 vertSpeed = terminalVelocity;
 

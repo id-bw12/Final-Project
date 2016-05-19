@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+
 using System.Collections;
 
 public class MenuAnimation : BaseControlScript{
@@ -18,8 +20,9 @@ public class MenuAnimation : BaseControlScript{
         canvasAlpha.interactable = false;
         yield return null;
 
-        while (canvasAlpha.alpha > 0) {
-            canvasAlpha.alpha -= Time.deltaTime * 2;
+		while (canvasAlpha.alpha > 0) {
+
+			canvasAlpha.alpha -= Time.deltaTime *2;
             yield return null;
         }
 
